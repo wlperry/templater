@@ -1,8 +1,11 @@
 # Graphing for: {{title}}
 # Date: {{date_chr}}
 
+library(scales)
+library(ggsave)
+library(patchwork)
+library(janitor)
 library(tidyverse)
-library(showtext)
 
 # Load cleaned data -------------------------------------------------------
 # data <- read_rds("output/cleaned_data.rds")
