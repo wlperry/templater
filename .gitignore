@@ -1,0 +1,6 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+# This prevents your test analyses from being uploaded to your package repo
+*-*_*/
