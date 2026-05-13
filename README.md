@@ -41,6 +41,6 @@ git push -u origin main --force
 
 Installation from GitHub
 Others (or you on another machine) can install this via:
-remotes::install_github("your-username/templater")
+remotes::install_github("wlperry/templater")
 library(templater)
 

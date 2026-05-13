@@ -1,16 +1,16 @@
 #' Create a standardized project directory
+#' @param project_name The name of the project (and the root folder)
+#' @param readme Logical; should a README be generated?
 #' @export
-templater <- function(date_chr, project_name, readme = TRUE) {
-  # 1. Validation
-  if (is.na(as.Date(date_chr, format = "%Y-%m-%d"))) {
-    stop("'date_chr' must be in yyyy-mm-dd format.")
-  }
+templater <- function(project_name, readme = TRUE) {
+  # 1. Automatically grab today's date
+  date_chr <- as.character(Sys.Date())
 
-  # 2. Define Variables
-  yr <- sub("-.*", "", date_chr)
+  # 2. Define Variables based on today's date
+  yr <- format(Sys.Date(), "%Y")
   date_strip <- stringr::str_remove_all(date_chr, "-")
 
-  # CHANGE: Folder is now just the project name
+  # Folder is just the project name
   folder_name <- project_name
 
   # 3. Create Folder Structure

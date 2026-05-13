@@ -4,7 +4,12 @@
 \alias{templater}
 \title{Create a standardized project directory}
 \usage{
-templater(date_chr, project_name, readme = TRUE)
+templater(project_name, readme = TRUE)
+}
+\arguments{
+\item{project_name}{The name of the project (and the root folder)}
+
+\item{readme}{Logical; should a README be generated?}
 }
 \description{
 Create a standardized project directory
