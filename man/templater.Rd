@@ -4,10 +4,12 @@
 \alias{templater}
 \title{Create a standardized project directory}
 \usage{
-templater(project_name, readme = TRUE)
+templater(project_name, path = "~/Desktop", readme = TRUE)
 }
 \arguments{
 \item{project_name}{The name of the project (and the root folder)}
+
+\item{path}{Directory where the project is created. Defaults to the Desktop.}
 
 \item{readme}{Logical; should a README be generated?}
 }

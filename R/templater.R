@@ -1,8 +1,9 @@
 #' Create a standardized project directory
 #' @param project_name The name of the project (and the root folder)
+#' @param path Directory where the project is created. Defaults to the Desktop.
 #' @param readme Logical; should a README be generated?
 #' @export
-templater <- function(project_name, readme = TRUE) {
+templater <- function(project_name, path = "~/Desktop", readme = TRUE) {
   # 1. Automatically grab today's date
   date_chr <- as.character(Sys.Date())
 
@@ -10,20 +11,33 @@ templater <- function(project_name, readme = TRUE) {
   yr <- format(Sys.Date(), "%Y")
   date_strip <- stringr::str_remove_all(date_chr, "-")
 
-  # Folder is just the project name
-  folder_name <- project_name
+  # 3. Path Handling (Cross-Platform mapping to Desktop)
+  target_dir <- path.expand(path)
+  folder_path <- file.path(target_dir, project_name)
 
-  # 3. Create Folder Structure
+  # 4. SAFETY CHECK: Prevent overwriting existing projects
+  if (dir.exists(folder_path)) {
+    stop(
+      "🛑 A project named '",
+      project_name,
+      "' already exists at:\n   ",
+      folder_path,
+      "\nPlease choose a new name or delete the existing folder.",
+      call. = FALSE
+    )
+  }
+
+  # 5. Create Folder Structure using the new folder_path
   subfolders <- c("data", "documents", "figures", "output", "scripts")
   for (sub in subfolders) {
     dir.create(
-      file.path(folder_name, sub),
+      file.path(folder_path, sub),
       recursive = TRUE,
       showWarnings = FALSE
     )
   }
 
-  # 4. Helper for replacements (to keep code clean)
+  # 6. Helper for replacements (to keep code clean)
   apply_templating <- function(text) {
     text <- gsub("{{yr}}", paste0("\"", yr, "\""), text, fixed = TRUE)
     text <- gsub(
@@ -42,14 +56,14 @@ templater <- function(project_name, readme = TRUE) {
     return(text)
   }
 
-  # 5. Create 01_import_and_clean.R
+  # 7. Create 01_import_and_clean.R
   path1 <- system.file("r-template.R", package = "templater", mustWork = TRUE)
   writeLines(
     apply_templating(readLines(path1)),
-    file.path(folder_name, "scripts", "01_import_and_clean.R")
+    file.path(folder_path, "scripts", "01_import_and_clean.R")
   )
 
-  # 6. Create 02_graphing.R
+  # 8. Create 02_graphing.R
   path2 <- system.file(
     "graphing-template.R",
     package = "templater",
@@ -57,10 +71,10 @@ templater <- function(project_name, readme = TRUE) {
   )
   writeLines(
     apply_templating(readLines(path2)),
-    file.path(folder_name, "scripts", "02_graphing.R")
+    file.path(folder_path, "scripts", "02_graphing.R")
   )
 
-  # 7. Create README
+  # 9. Create README
   if (readme) {
     path_rm <- system.file(
       "readme-template.md",
@@ -69,9 +83,14 @@ templater <- function(project_name, readme = TRUE) {
     )
     writeLines(
       apply_templating(readLines(path_rm)),
-      file.path(folder_name, "README.md")
+      file.path(folder_path, "README.md")
     )
   }
 
-  message("✅ Project '", folder_name, "' created successfully!")
+  message(
+    "✅ Project '",
+    project_name,
+    "' created successfully at:\n   ",
+    folder_path
+  )
 }
