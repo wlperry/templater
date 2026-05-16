@@ -11,8 +11,6 @@ library(tidyverse)
 # data <- read_rds("output/cleaned_data.rds")
 
 # Theme setup -------------------------------------------------------------
-# font_add_google("Roboto", "roboto")
-# showtext_auto()
 
 # Plotting ----------------------------------------------------------------
 # ggplot(data, aes(x = , y = )) +

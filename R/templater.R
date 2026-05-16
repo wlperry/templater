@@ -30,11 +30,17 @@ templater <- function(project_name, path = "~/Desktop", readme = TRUE) {
   # 5. Create Folder Structure using the new folder_path
   subfolders <- c("data", "documents", "figures", "output", "scripts")
   for (sub in subfolders) {
+    sub_dir_path <- file.path(folder_path, sub)
+
+    # Create the directory
     dir.create(
-      file.path(folder_path, sub),
+      sub_dir_path,
       recursive = TRUE,
       showWarnings = FALSE
     )
+
+    # Create the .gitkeep file so Git tracks the folder
+    file.create(file.path(sub_dir_path, ".gitkeep"), showWarnings = FALSE)
   }
 
   # 6. Helper for replacements (to keep code clean)

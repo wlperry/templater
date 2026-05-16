@@ -8,21 +8,13 @@ library(patchwork)
 library(janitor)
 library(tidyverse)
 
+# load themes -------------------------------------------------------------
+source("themes/r_themes_for_3_sizes.R")
 
 # Load data ---------------------------------------------------------------
-# This will now correctly show: tt_load("2026-05-13")
-tuesdata <- tt_load({{ date_chr }})
+df <- read_csv("data/   ") %>%
+  clean_names()
 
-# Set up paths for later use ----------------------------------------------
-yr <- {
-  {
-    yr
-  }
-}
-date_strip <- {
-  {
-    date_strip
-  }
-}
+# Clean data -------------------------------------------------------------
 
-# Data wrangling ----------------------------------------------------------
+# Plot data --------------------------------------------------------------
