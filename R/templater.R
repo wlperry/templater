@@ -28,7 +28,8 @@ templater <- function(project_name, path = "~/Desktop", readme = TRUE) {
   }
 
   # 5. Create Folder Structure using the new folder_path
-  subfolders <- c("data", "documents", "figures", "output", "scripts")
+  # MODIFIED: Added "themes" to the subfolders vector
+  subfolders <- c("data", "documents", "figures", "output", "scripts", "themes")
   for (sub in subfolders) {
     sub_dir_path <- file.path(folder_path, sub)
 
@@ -92,6 +93,20 @@ templater <- function(project_name, path = "~/Desktop", readme = TRUE) {
       file.path(folder_path, "README.md")
     )
   }
+
+  # 10. NEW: Copy r_themes_for_3_sizes.R into the themes subfolder
+  path_themes <- system.file(
+    "themes",
+    "r_themes_for_3_sizes.R",
+    package = "templater",
+    mustWork = TRUE
+  )
+
+  file.copy(
+    from = path_themes,
+    to = file.path(folder_path, "themes", "r_themes_for_3_sizes.R"),
+    overwrite = TRUE
+  )
 
   message(
     "✅ Project '",
